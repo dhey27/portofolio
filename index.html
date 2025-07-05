@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+
+
+<head>
+ <link rel="icon" type="image/png" sizes="32x32" href="https://raw.githubusercontent.com/dhey27/assets/main/favicon-32x32.png">
+<link rel="shortcut icon" href="https://raw.githubusercontent.com/dhey27/assets/main/favicon-32x32.png">
+
+
+
+  <meta charset="UTF-8" />
+  <meta name="robots" content="index, follow">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portofolio Deyan Rodiyansyah</title>
+  <meta name="description" content="Portofolio Deyan Rodiyansyah, Web Developer dan UI Designer. Proyek, skill, kontak.">
+  <meta name="keywords" content="Deyan Rodiyansyah, portofolio, web developer, UI designer, Laravel, Flutter">
+  <meta name="author" content="Deyan Rodiyansyah" />
+  <meta property="og:title" content="Portofolio Deyan Rodiyansyah" />
+  <meta property="og:description" content="Web Developer & UI Designer. Lihat proyek dan hubungi saya." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://deyanrodiyansyah.com" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/dhey27/assets/main/portofolio.png" />
+  
+  <!-- JSON-LD Schema for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Deyan Rodiyansyah",
+    "jobTitle": "Web Developer & UI Designer",
+    "url": "https://deyanrodiyansyah.com",
+    "sameAs": [
+      "https://linkedin.com/in/deyanrodiyansyah",
+      "https://instagram.com/deyanrodiyansyah",
+      "https://github.com/dhey27"
+    ],
+    "image": "https://raw.githubusercontent.com/dhey27/assets/main/portofolio.png",
+    "description": "Saya adalah pengembang web yang suka membangun UI modern dengan HTML, CSS, dan JavaScript."
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' }
+  </script>
+
+  
+
+  <style>
+    html {
+     scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* agar tidak tertutup navbar */
+    }
+    /* Loading screen */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background: white;
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      transition: opacity 0.5s ease;
+    }
+    #loading-screen.dark {
+      background: #1a202c;
+    }
+    /* Simple spinner */
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #2563eb;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg);}
+      100% { transform: rotate(360deg);}
+    }
+    .btn-gradient {
+  background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+  padding: 10px 24px; /* ukuran tombol lebih kecil */
+  font-weight: 600;
+  border-radius: 0.75rem;
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  display: inline-block;
+  text-decoration: none;
+  transition: 
+    background-position 0.6s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+  will-change: background-position, box-shadow, transform;
+}
+
+.btn-gradient:hover,
+.btn-gradient:focus-visible {
+  background-position: 100% 50%;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.5);
+  transform: scale(1.05);
+  outline: none;
+}
+
+    
+    .project-card:hover img {
+      transform: scale(1.05);
+    }
+    .active-link {
+      font-weight: bold;
+      color: #1e3a8a !important;
+    }
+
+    /* Dark mode toggle animation */
+    #dark-toggle {
+      transition: background-color 0.3s ease;
+    }
+    #dark-toggle span {
+      transition: transform 0.3s ease;
+      display: inline-block;
+    }
+    #dark-toggle.dark span {
+      transform: rotate(180deg);
+    }
+
+    /* Skill progress bar */
+    .skill-bar {
+      background: #e5e7eb; /* gray-200 */
+      border-radius: 9999px;
+      overflow: hidden;
+      height: 20px;
+      margin-top: 0.5rem;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: #3b82f6;
+      width: 0%;
+      border-radius: 9999px;
+      transition: width 1.5s ease;
+      will-change: width;
+    }
+
+    /* Accessibility: focus visible */
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+      outline: 2px solid #2563eb;
+      outline-offset: 2px;
+    }
+    #dark-toggle:focus-visible, #scrollTopBtn:focus-visible {
+      outline: 2px solid #2563eb;
+      outline-offset: 2px;
+    }
+
+/* Animasi masuk saat section terlihat */
+.section-hidden {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+    
+  </style>
+</head>
+<body class="bg-white text-gray-900 dark:bg-gray-900 dark:text-white font-sans">
+
+  <!-- Loading Screen -->
+
+<div id="loading-screen" aria-label="Loading content" role="alert" aria-live="assertive">
+  <div class="spinner" aria-hidden="true"></div>
+  <div class="text-gray-900 dark:text-white">Memuat halaman...</div>
+</div>
+
+
+  <!-- Dark Mode Toggle -->
+  <button id="dark-toggle" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode"
+  class="fixed top-4 right-4 bg-gray-300 dark:bg-gray-700 text-sm px-3 py-1 rounded z-50">
+  <span>🌗</span>
+</button>
+
+
+ 
+  <!-- Scroll to Top -->
+<button id="scrollTopBtn" aria-label="Scroll to top" 
+  class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full hidden z-50 p-2 text-lg w-10 h-10">
+ <!-- Gunakan SVG panah atas untuk lebih rapi -->
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7" />
+  </svg>
+</button>
+
+
+  <!-- Navigation -->
+  <nav class="fixed w-full bg-white dark:bg-gray-800 shadow z-40" role="navigation" aria-label="Main Navigation">
+    <ul class="flex justify-center gap-6 py-3 font-semibold text-blue-600 dark:text-blue-400" id="navbar">
+      <li><a href="#intro">Beranda</a></li>
+      <li><a href="#about">Tentang</a></li>
+      <li><a href="#projects">Proyek</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+  </nav>
+    <main id="main-content" tabindex="-1">
+
+
+      
+  <!-- Intro Section -->
+   <section id="intro" role="region" aria-labelledby="intro-heading" tabindex="0" class="section-hidden min-h-screen flex items-center justify-center text-center px-6 relative overflow-hidden">
+  <div class="absolute inset-0 bg-[url('https://source.unsplash.com/1600x900/?technology')] bg-cover opacity-20 dark:opacity-10" aria-hidden="true"></div>
+  <div class="relative z-10 max-w-xl">
+    <h1 id="intro-heading" class="text-5xl md:text-7xl font-extrabold mb-4">Halo, Saya Deyan Rodiyansyah</h1>
+    <p class="text-xl text-gray-700 dark:text-gray-300 mb-8">Web Developer & UI Designer</p>
+    <a href="#projects" class="btn-gradient">Lihat Proyek</a>
+  </div>
+</section>
+
+
+
+  <!-- About -->
+   <section id="about" class="section-hidden pt-10 pb-20 text-center px-6 max-w-3xl mx-auto">
+  
+  <h2 id="about-heading" class="text-4xl font-bold mb-6">Tentang Saya</h2>
+    <p class="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
+      Saya adalah pengembang web yang suka membangun UI modern dengan HTML, CSS, dan JavaScript.
+      Saya juga sedang mendalami Laravel dan Flutter. Walaupun semuanya masih tahap pembelajaran,
+      saya mengerjakannya dengan teliti dan detail agar setiap program yang saya buat menjadi lebih baik.
+      Saya juga melakukan improvisasi terhadap berbagai program yang sudah ada dan mengembangkannya,
+      sehingga mendapatkan pengetahuan baru. Ada juga beberapa proyek yang sudah saya buat.
+    </p>
+
+    <!-- Skill bars -->
+    <div class="mt-12 text-left max-w-md mx-auto" aria-label="Skill Progress Bars">
+      <h3 class="text-2xl font-semibold mb-4">Skill Saya</h3>
+      <div>
+        <label for="skill-html" class="block font-medium">HTML & CSS</label>
+        <div class="skill-bar" aria-hidden="true">
+          <div id="skill-html" class="skill-bar-fill" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <label for="skill-js" class="block font-medium">JavaScript</label>
+        <div class="skill-bar" aria-hidden="true">
+          <div id="skill-js" class="skill-bar-fill" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <label for="skill-laravel" class="block font-medium">Laravel</label>
+        <div class="skill-bar" aria-hidden="true">
+          <div id="skill-laravel" class="skill-bar-fill" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <label for="skill-flutter" class="block font-medium">Flutter</label>
+        <div class="skill-bar" aria-hidden="true">
+          <div id="skill-flutter" class="skill-bar-fill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+   <section id="projects" class="section-hidden py-20 px-6 max-w-6xl mx-auto text-center">
+
+
+  <h2 id="projects-heading" class="text-4xl font-bold mb-12">Proyek Saya</h2>
+
+ <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+
+    <!-- Proyek 1: Veltro -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden project-card transition-transform duration-300">
+      <picture>
+        <source srcset="https://raw.githubusercontent.com/dhey27/assets/main/Veltro.png" type="image/png" />
+        <img src="https://raw.githubusercontent.com/dhey27/assets/main/Veltro.png" alt="Tampilan proyek Veltro – toko sepatu Laravel" class="w-full h-48 object-cover transition-transform duration-500" loading="lazy" />
+      </picture>
+      <div class="p-5 text-left">
+        <h3 class="text-2xl font-semibold mb-2">Veltro – Toko Sepatu Laravel</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+          Website e-commerce dengan Laravel & Bootstrap. Fitur: katalog, keranjang, checkout, admin panel.
+        </p>
+        <a href="https://github.com/dhey27/Veltro" target="_blank" rel="noopener noreferrer" class="btn-gradient" aria-label="Lihat kode proyek Veltro di GitHub" title="Lihat kode proyek Veltro di GitHub">
+          Lihat Kode
+        </a>
+      </div>
+    </div>
+
+    <!-- Proyek 2: Portofolio -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden project-card transition-transform duration-300">
+      <picture>
+        <source srcset="https://raw.githubusercontent.com/dhey27/assets/main/portofolio1.png" type="image/png" />
+        <img src="https://raw.githubusercontent.com/dhey27/assets/main/portofolio1.png" alt="Tampilan proyek website portofolio Laravel" class="w-full h-48 object-cover transition-transform duration-500" loading="lazy" />
+      </picture>
+      <div class="p-5 text-left">
+        <h3 class="text-2xl font-semibold mb-2">Portofolio - Website Laravel</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+          Website portofolio yang saya buat menggunakan Laravel & Tailwind CSS.
+        </p>
+        <a href="https://github.com/dhey27/portofolio" target="_blank" rel="noopener noreferrer" class="btn-gradient" aria-label="Lihat kode proyek Portofolio di GitHub" title="Lihat kode proyek Portofolio di GitHub">
+          Lihat Kode
+        </a>
+      </div>
+    </div>
+
+    <!-- Proyek 3: Flutter Apps -->
+    <div class="bg-white dark:bg-gray-800 shadow-xl rounded-xl overflow-hidden project-card transition-transform duration-300">
+      <picture>
+        <source srcset="https://raw.githubusercontent.com/dhey27/assets/main/flutter.png" type="image/png" />
+        <img src="https://raw.githubusercontent.com/dhey27/assets/main/flutter.png" alt="Tampilan proyek aplikasi Flutter" class="w-full h-48 object-cover transition-transform duration-500" loading="lazy" />
+      </picture>
+      <div class="p-5 text-left">
+        <h3 class="text-2xl font-semibold mb-2">Flutter Apps</h3>
+        <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">
+          Beberapa aplikasi Flutter yang saya buat sebagai pembelajaran.
+        </p>
+        <a href="https://github.com/dhey27/flutter" target="_blank" rel="noopener noreferrer" class="btn-gradient" aria-label="Lihat kode proyek Flutter di GitHub" title="Lihat kode proyek Flutter di GitHub">
+          Lihat Kode
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  
+  <!-- Contact -->
+   <section id="contact" class="section-hidden py-20 text-center px-6 max-w-3xl mx-auto mt-60">
+  <h2 id="contact-heading" class="text-4xl font-bold mb-8">Kontak Saya</h2>
+  <p class="mb-8 text-lg text-gray-700 dark:text-gray-300">Silakan hubungi saya melalui media sosial berikut atau kirim email langsung.</p>
+  <div class="flex justify-center gap-8 text-3xl text-blue-600 dark:text-blue-400">
+    <a href="https://www.linkedin.com/in/deyan-rodiyansyah-203213210/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8 h-8" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11.5 19h-3v-9h3v9zm-1.5-10.208c-.966 0-1.75-.783-1.75-1.75s.784-1.75 1.75-1.75 1.75.783 1.75 1.75-.784 1.75-1.75 1.75zm12.5 10.208h-3v-4.5c0-1.119-.902-2.025-2.025-2.025s-2.025.906-2.025 2.025v4.5h-3v-9h3v1.341c.625-1.03 2.18-1.341 3.025-1.341 2.275 0 4 1.875 4 4.5v4.5z"/>
+      </svg>
+    </a>
+    <a href="https://www.instagram.com/dey.rn_?igsh=eWhsY3VtaXpiNWNk" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8 h-8" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M7.5 2C4.462 2 2 4.462 2 7.5v9c0 3.038 2.462 5.5 5.5 5.5h9c3.038 0 5.5-2.462 5.5-5.5v-9c0-3.038-2.462-5.5-5.5-5.5h-9zm9 2h1a1 1 0 110 2h-1a1 1 0 110-2zm-4.5 2.5a4.5 4.5 0 110 9 4.5 4.5 0 010-9zm0 2a2.5 2.5 0 100 5 2.5 2.5 0 000-5z"/>
+      </svg>
+    </a>
+
+    <!-- TikTok -->
+    <a href="https://tiktok.com/@deyanrodiyansyah" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="text-blue-600 dark:text-blue-400">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8 h-8" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M9 2v12.75a3.75 3.75 0 1 0 3.75 3.75V7.125h3.375"/>
+  </svg>
+</a>
+
+
+
+
+    <a href="mailto:deyanrodiyansyah@gmail.com" aria-label="Email" class="text-blue-600 dark:text-blue-400">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="w-8 h-8" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 4H4c-1.104 0-2 .896-2 2v12c0 1.104.896 2 2 2h16c1.104 0 2-.896 2-2V6c0-1.104-.896-2-2-2zm0 2v.511l-8 5.011-8-5.011V6h16zm0 12H4v-9.489l8 5.011 8-5.011V18z"/>
+      </svg>
+    </a>
+  </div>
+</section>
+
+
+  <!-- Footer -->
+  <footer class="text-center py-8 text-sm text-gray-500 dark:text-gray-400">
+    &copy; <span id="year"></span> Deyan Rodiyansyah. All rights reserved.
+  </footer>
+
+  <script>
+    
+
+   // Dark mode toggle
+const toggle = document.getElementById('dark-toggle');
+const html = document.documentElement;
+
+function updateToggleAria() {
+  const isDark = html.classList.contains('dark');
+  toggle.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+}
+
+// Set initial dark mode from localStorage or system preference
+document.addEventListener('DOMContentLoaded', () => {
+  if (localStorage.getItem('theme') === 'dark' ||
+      (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    html.classList.add('dark');
+    toggle.classList.add('dark');
+  } else {
+    html.classList.remove('dark');
+    toggle.classList.remove('dark');
+  }
+  updateToggleAria();
+});
+
+toggle.addEventListener('click', () => {
+  html.classList.toggle('dark');
+  toggle.classList.toggle('dark');
+  localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+  updateToggleAria();
+});
+
+
+
+
+
+
+// Scroll to top button toggle visibility
+const scrollBtn = document.getElementById('scrollTopBtn');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 100) {
+    scrollBtn.classList.remove('hidden');
+  } else {
+    scrollBtn.classList.add('hidden');
+  }
+});
+
+scrollBtn.addEventListener('click', () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+scrollBtn.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+});
+
+// Animate skill bars and hide loading screen after window load
+window.addEventListener('load', () => {
+  const loading = document.getElementById('loading-screen');
+  if (loading) {
+    loading.style.opacity = '0';
+    setTimeout(() => {
+      loading.style.display = 'none';
+      loading.setAttribute('aria-hidden', 'true');
+      document.getElementById('main-content')?.focus();
+    }, 500);
+  }
+
+  // Skill bar animation
+  const skillData = {
+    'skill-html': '90%',
+    'skill-js': '75%',
+    'skill-laravel': '65%',
+    'skill-flutter': '50%'
+  };
+  for (const [id, width] of Object.entries(skillData)) {
+    const el = document.getElementById(id);
+    if (el) el.style.width = width;
+  }
+
+  // ✨ FIX: Observer dimuat setelah DOM selesai
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('section-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.1
+  });
+
+  document.querySelectorAll('.section-hidden').forEach(section => {
+    observer.observe(section);
+  });
+
+  // Fokus untuk aksesibilitas
+  const mainContent = document.getElementById('main-content');
+  if (mainContent) {
+    mainContent.focus();
+  }
+});
+
+
+// Optional: Highlight active nav link on scroll
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('#navbar a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    if (rect.top <= 100 && rect.bottom > 100) {
+      current = section.getAttribute('id');
+    }
+  });
+
+  navLinks.forEach(link => {
+    link.classList.remove('active-link');
+    link.removeAttribute('aria-current');
+    if (link.getAttribute('href') === '#' + current) {
+      link.classList.add('active-link');
+      link.setAttribute('aria-current', 'page');
+    }
+  });
+});
+ 
+
+    // Dynamic current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+   // Loading screen fade out and skill bar animation
+    
+  </script>
+
+</body>
+</html>
+
+
+
