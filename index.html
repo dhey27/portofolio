@@ -115,16 +115,34 @@
     }
 
     /* Dark mode toggle animation */
-    #dark-toggle {
-      transition: background-color 0.3s ease;
-    }
-    #dark-toggle span {
-      transition: transform 0.3s ease;
-      display: inline-block;
-    }
-    #dark-toggle.dark span {
-      transform: rotate(180deg);
-    }
+#dark-toggle {
+  transition: background-color 0.3s ease;
+  top: 1rem;
+  right: 1rem;
+  position: fixed; /* pastikan tetap fixed */
+}
+
+/* Responsif: jika layar di bawah 640px, geser tombol ke bawah */
+@media (max-width: 640px) {
+  #dark-toggle {
+    top: 0.5rem; /* geser lebih ke bawah agar tidak tabrakan dengan 'Kontak' */
+    right: 1rem;
+  }
+
+  nav {
+    padding-right: 3rem; /* beri ruang agar 'Kontak' tidak ketimpa tombol 🌗 */
+  }
+}
+
+#dark-toggle span {
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+#dark-toggle.dark span {
+  transform: rotate(180deg);
+}
+
 
     /* Skill progress bar */
     .skill-bar {
@@ -296,7 +314,7 @@
         <img src="https://raw.githubusercontent.com/dhey27/assets/main/portofolio1.png" alt="Tampilan proyek website portofolio Laravel" class="w-full h-48 object-cover transition-transform duration-500" loading="lazy" />
       </picture>
       <div class="p-5 text-left">
-        <h3 class="text-2xl font-semibold mb-2">Portofolio - Website Laravel</h3>
+        <h3 class="text-2xl font-semibold mb-2">Portofolio</h3>
         <p class="text-gray-600 dark:text-gray-300 mb-4 text-sm">
           Website portofolio yang saya buat menggunakan Laravel & Tailwind CSS.
         </p>
